@@ -37,14 +37,14 @@ class Chassis(object):
         rsp = self.send_message(req)
         check_completion_code(rsp.completion_code)
 
-    def set_boot_options(self, persistent_boot_option, boot_device):
+    def set_boot_options(self, bios_boot_type, persistent_boot_option, boot_device):
         req = create_request_by_name('SetSystemBootOptions')
         req.parameter_selector.boot_options = 5
         req.parameter_selector.parameter_valid = 0
         req.data_1.valid_flag = 1
         # intersted field
         req.data_1.persistent_boot_option = persistent_boot_option
-        req.data_1.bios_boot_efi = 0
+        req.data_1.bios_boot_type = bios_boot_type
         req.data_3.ignore = 0
         req.data_4.ignore = 0
         req.data_5.ignore = 0
@@ -66,10 +66,10 @@ class Chassis(object):
         check_completion_code(rsp.completion_code)
         return ChassisBootOptions(rsp)
 
-    def chassis_control_power_down_krub(self):
+    def chassis_control_power_down(self):
         self.chassis_control(CONTROL_POWER_DOWN)
 
-    def chassis_control_power_up_krub(self):
+    def chassis_control_power_up(self):
         self.chassis_control(CONTROL_POWER_UP)
 
     def chassis_control_power_cycle(self):

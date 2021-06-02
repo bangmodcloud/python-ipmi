@@ -38,6 +38,10 @@ BOOT_OPTION_EFI = 1
 BOOT_DEVICE_PXE = 1
 BOOT_DEVICE_DISK = 3
 
+# Persistent boot options
+NON_PERSISTENT_BOOT_OPTION = 0
+PERSISTENT_BOOT_OPTION = 1
+
 
 @register_message_class
 class GetChassisCapabilitiesReq(Message):
@@ -181,7 +185,7 @@ class SetSystemBootOptionsReq(Message):
         # boot flags (semi vi)
          Bitfield('data_1', 1,
                  Bitfield.ReservedBit(5, 0),
-                 Bitfield.Bit('bios_boot_efi', 1),
+                 Bitfield.Bit('bios_boot_type', 1),
                  Bitfield.Bit('persistent_boot_option', 1),
                  Bitfield.Bit('valid_flag', 1)),
         Bitfield('data_2', 1,
